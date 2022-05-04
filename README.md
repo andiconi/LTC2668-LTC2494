@@ -2,32 +2,32 @@
 
 
 # SPI Interface for LTC2668 and LTC2494 
-### Table of Contents
+# Table of Contents
 
-## [Introduction](#Introduction)
-
-
-## [Module Definitions](#Module-Definitions)
+- [Introduction](#Introduction)
 
 
-## [Port Definitions](#Port-Definitions)
+- [Module Definitions](#Module-Definitions)
 
-- ### [SPI Master](#SPIMaster)
+
+- [Port Definitions](#Port-Definitions)
+
+- [SPI Master](#SPIMaster)
   - Inputs
   - Outputs
  
 
-- ### [MasterDriver](#MasterDriver)
+- [MasterDriver](#MasterDriver)
   - Inputs
   - Outputs
  
 
-- ### [DataDriver](#DataDriver)
+- [DataDriver](#DataDriver)
   - Inputs
   - Outputs
  
 
-- ### [Clock_Divider](#Clock_Divider)
+- [Clock_Divider](#Clock_Divider)
   - Inputs
   - Outputs
  
