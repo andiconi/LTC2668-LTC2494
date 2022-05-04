@@ -7,7 +7,7 @@
 ## [Introduction](#Introduction)
 
 
-## Module Definitions
+## [Module Definitions](#Module Definitions)
 
 
 ## Port Definitions
@@ -17,17 +17,17 @@
   - Outputs
  
 
-- ### MasterDriver
+- ### [MasterDriver](#MasterDriver)
   - Inputs
   - Outputs
  
 
-- ### DataDriver
+- ### [DataDriver](#DataDriver)
   - Inputs
   - Outputs
  
 
-- ### Clock_Divider
+- ### [Clock_Divider](#Clock_Divider)
   - Inputs
   - Outputs
  
