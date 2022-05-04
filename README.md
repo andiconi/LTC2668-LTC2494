@@ -7,28 +7,12 @@ This Document explains how the SPIMaster module and other modules contained in t
 
 # Table of Contents
 - [Module Definitions](#Module-Definitions)
-
-
 - [Port Definitions](#Port-Definitions)
-
 - [SPI Master](#SPIMaster)
-  - Inputs
-  - Outputs
- 
-
 - [MasterDriver](#MasterDriver)
-  - Inputs
-  - Outputs
- 
-
 - [DataDriver](#DataDriver)
-  - Inputs
-  - Outputs
- 
-
 - [Clock_Divider](#Clock_Divider)
-  - Inputs
-  - Outputs
+
  
 ## Module Definitions
 **SPIMaster** contains the logic required to take a 1-byte input, and
