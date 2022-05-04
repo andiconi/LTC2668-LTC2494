@@ -7,10 +7,10 @@
 ## [Introduction](#Introduction)
 
 
-## [Module Definitions](#Module Definitions)
+## [Module Definitions](#Module-Definitions)
 
 
-## Port Definitions
+## [Port Definitions](#Port-Definitions)
 
 - ### [SPI Master](#SPIMaster)
   - Inputs
