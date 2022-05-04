@@ -1,0 +1,75 @@
+# Reading C:/altera/13.0sp1/modelsim_ase/tcl/vsim/pref.tcl 
+# do SPIDAC_run_msim_rtl_verilog.do 
+# if {[file exists rtl_work]} {
+# 	vdel -lib rtl_work -all
+# }
+# vlib rtl_work
+# vmap work rtl_work
+# Copying C:\altera\13.0sp1\modelsim_ase\win32aloem/../modelsim.ini to modelsim.ini
+# Modifying modelsim.ini
+# ** Warning: Copied C:\altera\13.0sp1\modelsim_ase\win32aloem/../modelsim.ini to modelsim.ini.
+#          Updated modelsim.ini.
+# 
+# vlog -vlog01compat -work work +incdir+G:/My\ Drive/FPGA\ Design/SPI\ Interface/SPI\ Verilog\ Projects/SPI\ for\ LTC2668\ and\ LTC2494/SPI {G:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI/SPIMaster.v}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling module SPIMaster
+# -- Compiling module SPIMasterCS
+# 
+# Top level modules:
+# 	SPIMasterCS
+# vlog -vlog01compat -work work +incdir+G:/My\ Drive/FPGA\ Design/SPI\ Interface/SPI\ Verilog\ Projects/SPI\ for\ LTC2668\ and\ LTC2494/SPI {G:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI/MasterDriver.v}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling module MasterDriver
+# 
+# Top level modules:
+# 	MasterDriver
+# vlog -vlog01compat -work work +incdir+G:/My\ Drive/FPGA\ Design/SPI\ Interface/SPI\ Verilog\ Projects/SPI\ for\ LTC2668\ and\ LTC2494/SPI {G:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI/CLOCK.v}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling module CLOCK
+# 
+# Top level modules:
+# 	CLOCK
+# vlog -vlog01compat -work work +incdir+G:/My\ Drive/FPGA\ Design/SPI\ Interface/SPI\ Verilog\ Projects/SPI\ for\ LTC2668\ and\ LTC2494/SPI {G:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI/datadriver.v}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling module datadriver
+# 
+# Top level modules:
+# 	datadriver
+# vlog -vlog01compat -work work +incdir+G:/My\ Drive/FPGA\ Design/SPI\ Interface/SPI\ Verilog\ Projects/SPI\ for\ LTC2668\ and\ LTC2494/SPI {G:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI/ClockDivider.v}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling module Clock_divider
+# 
+# Top level modules:
+# 	Clock_divider
+# vlog -vlog01compat -work work +incdir+G:/My\ Drive/FPGA\ Design/SPI\ Interface/SPI\ Verilog\ Projects/SPI\ for\ LTC2668\ and\ LTC2494/SPI/db {G:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI/db/clock_altpll.v}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling module CLOCK_altpll
+# 
+# Top level modules:
+# 	CLOCK_altpll
+# 
+# vlog -sv -work work +incdir+G:/My\ Drive/FPGA\ Design/SPI\ Interface/SPI\ Verilog\ Projects/SPI\ for\ LTC2668\ and\ LTC2494/SPI {G:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI/SPIDAC.sv}
+# Model Technology ModelSim ALTERA vlog 10.1d Compiler 2012.11 Nov  2 2012
+# -- Compiling module SPIDAC
+# 
+# Top level modules:
+# 	SPIDAC
+# 
+# vsim -t 1ps -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cycloneiii_ver -L rtl_work -L work -voptargs="+acc"  SPIDAC
+# vsim -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cycloneiii_ver -L rtl_work -L work -voptargs=\"+acc\" -t 1ps SPIDAC 
+# Loading sv_std.std
+# Loading work.SPIDAC
+# Loading work.SPIMasterCS
+# Loading work.SPIMaster
+# Loading work.MasterDriver
+# Loading work.datadriver
+# Loading work.Clock_divider
+# 
+# add wave *
+# view structure
+# .main_pane.structure.interior.cs.body.struct
+# view signals
+# .main_pane.objects.interior.cs.body.tree
+# run -all
+# Break key hit 
+# Break in Module Clock_divider at G:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI/ClockDivider.v line 22

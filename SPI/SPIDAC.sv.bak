@@ -1,0 +1,168 @@
+
+///////////////////////////////////////////////////////////////////////////////
+// Description:      TESTBENCH FOR SENDING OVER DAC PROTOCOL
+///////////////////////////////////////////////////////////////////////////////
+
+module SPIDAC();
+  
+  parameter SPI_MODE = 0;           // CPOL = 1, CPHA = 1
+  parameter CLKS_PER_HALF_BIT = 4;  // 6.25 MHzo
+  parameter MAIN_CLK_DELAY = 2;     // 25 MHz
+  parameter MAX_BYTES_PER_CS = 16;   // 16 bytes per chip select
+  parameter CS_INACTIVE_CLKS = 0;  // Adds delay between bytes
+  
+
+  logic r_Rst_L     = 1'b0;  
+  logic w_SPI_Clk;
+  logic r_Clk       = 1'b0;
+  logic w_SPI_CS_n;
+  logic w_SPI_MOSI;
+  // Master Specific
+  logic [7:0] r_Master_TX_Byte;
+  logic r_Master_TX_DV;
+  logic w_Master_TX_Ready;
+  logic w_Master_RX_DV;
+  logic [7:0] w_Master_RX_Byte;
+  logic [4:0] w_Master_RX_Count, r_Master_TX_Count;
+  
+  logic[31:0] DAC_DATA;
+    // Slave Specific
+  logic [7:0] r_Slave_TX_Byte;
+  
+  logic       w_Slave_RX_DV, r_Slave_TX_DV;
+  logic [7:0] w_Slave_RX_Byte;
+  logic w_SPI_MISO;
+  logic w_slaveready;
+	logic datavalid;
+	logic driverready;
+  //regbank 
+  	logic w_write_line;
+	logic[3:0] w_read_addr, w_write_addr;
+	logic[15:0] w_write_data, w_read_data;
+  // Clock Generators:
+  always #(MAIN_CLK_DELAY) r_Clk = ~r_Clk;
+//////////////////////////////////////////////////////////////
+//MASTER
+  // Instantiate UUT
+  SPIMasterCS
+  #(.SPI_MODE(SPI_MODE),
+    .HALF_BIT_CLKS(CLKS_PER_HALF_BIT),
+    .BYTES_PER_CS(MAX_BYTES_PER_CS),
+    .CS_INACTIVE_CLKS(CS_INACTIVE_CLKS)
+    ) UUT
+  (
+   // Control/Data Signals,
+   .i_FPGA_rst(r_Rst_L),     // FPGA Reset
+   .i_FPGA_clk(r_Clk),         // FPGA Clock
+   
+   // TX (MOSI) Signals
+   .i_MOSI_count(r_Master_TX_Count),   // Number of bytes per CS
+   .i_MOSI(r_Master_TX_Byte),     // Byte to transmit on MOSI
+   .i_MOSIdv(r_Master_TX_DV),         // Data Valid Pulse with i_TX_Byte
+   .o_MOSI_ready(w_Master_TX_Ready),   // Transmit Ready for Byte
+   
+   // RX (MISO) Signals
+   .o_MISO_count(w_Master_RX_Count), // Index of RX'd byte
+   .o_MISOdv(w_Master_RX_DV),       // Data Valid pulse (1 clock cycle)
+   .o_MISO(w_Master_RX_Byte),   // Byte received on MISO
+
+   // SPI Interface
+   .o_SPI_clk(w_SPI_Clk),
+   .i_SPI_MISO(w_SPI_MISO),
+   .o_SPI_MOSI(w_SPI_MOSI),
+   .o_SPI_CS(w_SPI_CS_n)
+   );
+
+///////////////////////////////////////////////////////////////////////
+	//SLAVE
+	 // Instantiate UUT
+  SPI_Slave #(.SPI_MODE(SPI_MODE)) SPI_Slave_UUT
+  (
+   // Control/Data Signals,
+   .i_Rst_L(r_Rst_L),      // FPGA Reset
+   .i_Clk(r_Clk),          // FPGA Clock
+   .o_RX_DV(w_Slave_RX_DV),      // Data Valid pulse (1 clock cycle)
+   .o_RX_Byte(w_Slave_RX_Byte),  // Byte received on MOSI
+	.o_MISO_ready(w_slaveready),
+   .i_TX_DV(r_Slave_TX_DV),      // Data Valid pulse
+   .i_TX_Byte(r_Slave_TX_Byte),  // Byte to serialize to MISO (set up for loopback)
+
+   // SPI Interface
+   .i_SPI_Clk(w_SPI_Clk),
+   .o_SPI_MISO(w_SPI_MISO),
+   .i_SPI_MOSI(w_SPI_MOSI),
+   .i_SPI_CS_n(w_SPI_CS_n)
+   );
+	
+//////////////////////////////////////////////////////////////////////
+	MasterDriver MSPI_Driver_UUT
+	(
+	.i_FPGA_clk(r_Clk),
+	.i_FPGA_rst(r_Rst_L),
+	.inputByte(r_Master_TX_Byte), //mosi byte
+	.o_MOSI_count(r_Master_TX_Count),
+	.i_DAC_DATA(DAC_DATA),
+	.o_MOSIdv(r_Master_TX_DV), //mosi data valid
+	.i_MOSI_ready(w_Master_TX_Ready),
+	.o_ready(driverready),
+	.i_DataValid(datavalid)
+	);
+	
+	SlaveDriver slSPI_Driver_UUT
+	(
+	.o_write(w_write_line),
+	.raddr(w_read_addr),
+	.waddr(w_write_addr),
+	.wrData(w_write_data),
+	.reData(w_read_data),
+	.i_FPGA_clk(r_Clk),
+	.i_FPGA_rst(r_Rst_L),
+	.i_RXByte(w_Slave_RX_Byte), //mosi byte
+	.i_slave_ready(w_slaveready),
+	.i_RXdv(w_Slave_RX_DV), //mosi data valid
+	.o_TXByte(r_Slave_TX_Byte),
+	.o_TXdv(r_Slave_TX_DV)
+	);
+	
+
+	regBank regBank_UUT
+	(
+	.clk(r_Clk),
+	.write(w_write_line),
+	.reset(r_Rst_L),
+	.raddr(w_read_addr),
+	.waddr(w_write_addr),
+	.wData(w_write_data),
+	.rData(w_read_data)
+	);
+	datadriver data_UUT
+	(
+	.clk(r_Clk),
+	.rst(r_Rst_L),
+	.i_ready(driverready),
+	.o_dataValid(datavalid),
+	.o_DATA(DAC_DATA)
+	);
+
+  initial
+    begin
+
+		
+      repeat(10) @(posedge r_Clk);
+      r_Rst_L  = 1'b0;
+      repeat(10) @(posedge r_Clk);
+      r_Rst_L          = 1'b1;
+      repeat(100) @(posedge r_Clk);
+		repeat(100) @(posedge r_Clk);
+		
+		
+      //$finish();      
+    end // initial begin
+
+endmodule // SPI_Master_With_Single_CS_TB
+
+
+
+
+
+

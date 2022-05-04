@@ -1,0 +1,76 @@
+module MasterDriver(
+	input i_FPGA_clk,
+	input i_FPGA_rst,
+	output[4:0] o_MOSI_count,//bytecount
+	output[7:0] inputByte, //mosi byte
+	output reg o_MOSIdv, //mosi data valid
+	output o_ready, //ready signal for higher level
+	input i_MOSI_ready,//ready signal from spi module
+	input i_DataValid, // data valid from higher level
+	input[31:0] i_DAC_DATA //dat from higher level
+	);
+	
+	reg[7:0] r_byte;
+	reg[31:0] r_DAC_Byte;
+	reg [3:0] bytecount = 0;
+	reg r_ready;
+	
+	
+	always @(posedge i_FPGA_clk or negedge i_FPGA_rst) 
+	begin 
+		if(~i_FPGA_rst) 
+		begin
+			o_MOSIdv <= 0;
+			r_byte <= 8'h00;
+			r_DAC_Byte <= 32'h00000000;
+			bytecount <= 0;
+			r_ready <= 1;
+		end
+		else
+		begin 
+			if(i_MOSI_ready)
+			begin	
+				case(bytecount)
+				0:
+				begin
+					if(i_DataValid)
+					begin
+						r_byte <= i_DAC_DATA[31:24];
+						r_DAC_Byte <= i_DAC_DATA;
+						o_MOSIdv <= 1;
+						r_ready <= 0;
+						bytecount <= bytecount + 1;
+					end
+				end
+				1:
+				begin
+					r_byte <= r_DAC_Byte[23:16];
+					o_MOSIdv <= 1;
+					bytecount<= bytecount + 1;
+				end
+				2:
+				begin
+					r_byte <= 8'h00;
+					o_MOSIdv <= 1;
+					bytecount <= bytecount + 1;
+				end
+				3:
+				begin
+				r_ready <= 1;
+				bytecount <= 0;
+				end
+				endcase
+			end
+		else
+		begin					
+			o_MOSIdv <= 0;
+		end
+		end
+		
+	end
+	
+	assign o_ready = i_DataValid ? 0:r_ready;
+	assign o_MOSI_count = 3;
+	assign inputByte = r_byte;
+endmodule
+	

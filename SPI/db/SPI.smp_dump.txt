@@ -1,0 +1,6 @@
+
+State Machine - |BlockWDriver|SPIMasterCS:inst2|r_SM_CS
+Name r_SM_CS.IDLE r_SM_CS.CSINACTIVE r_SM_CS.TRANSFER 
+r_SM_CS.IDLE 0 0 0 
+r_SM_CS.TRANSFER 1 0 1 
+r_SM_CS.CSINACTIVE 1 1 0 

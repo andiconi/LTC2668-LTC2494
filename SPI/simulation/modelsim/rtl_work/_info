@@ -1,0 +1,175 @@
+m255
+K3
+13
+cModel Technology
+Z0 dG:\My Drive\FPGA Design\SPI Interface\SPI Verilog Projects\SPI for LTC2668 and LTC2494\SPI\simulation\modelsim
+vCLOCK
+Iz8aP<BiPQ;6DX9KZLG_^93
+VF:TTeP`dk<?BCkPkWX@`T1
+Z1 dG:\My Drive\FPGA Design\SPI Interface\SPI Verilog Projects\SPI for LTC2668 and LTC2494\SPI\simulation\modelsim
+w1628105025
+8G:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI/CLOCK.v
+FG:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI/CLOCK.v
+L0 39
+Z2 OV;L;10.1d;51
+r1
+31
+Z3 o-vlog01compat -work work -O0
+Z4 !s92 -vlog01compat -work work {+incdir+G:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI} -O0
+n@c@l@o@c@k
+!i10b 1
+!s100 SKDXN_?dMkcEN8RDhLR752
+!s85 0
+!s108 1628698699.624000
+!s107 G:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI/CLOCK.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+G:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI|G:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI/CLOCK.v|
+!s101 -O0
+vCLOCK_altpll
+IM?51GOiO@O:`g_@A0VU5:0
+VCVicN=[mIgR6gMW2lIi>03
+R1
+w1628105039
+8G:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI/db/clock_altpll.v
+FG:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI/db/clock_altpll.v
+L0 29
+R2
+r1
+31
+R3
+n@c@l@o@c@k_altpll
+!i10b 1
+!s100 8YeWUfnV;gBm`hi6^BD292
+!s85 0
+!s108 1628698700.597000
+!s107 G:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI/db/clock_altpll.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+G:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI/db|G:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI/db/clock_altpll.v|
+!s101 -O0
+!s92 -vlog01compat -work work {+incdir+G:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI/db} -O0
+vClock_divider
+IJ]g;S[ELMQNADLRMR78l53
+V>_og`cm2>SkNzgR>Ui<[m3
+R1
+w1628103864
+8G:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI/ClockDivider.v
+FG:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI/ClockDivider.v
+L0 1
+R2
+r1
+31
+R3
+R4
+n@clock_divider
+!i10b 1
+!s100 I`j:ORPOGkLd5a?=^X7j>3
+!s85 0
+!s108 1628698700.253000
+!s107 G:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI/ClockDivider.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+G:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI|G:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI/ClockDivider.v|
+!s101 -O0
+vdatadriver
+Iab[:^BKiKk_VcA6B2]lOl3
+V15Z9C0V;SnWbEbQh03ol21
+R1
+w1628171366
+8G:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI/datadriver.v
+FG:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI/datadriver.v
+L0 2
+R2
+r1
+31
+R3
+R4
+!i10b 1
+!s100 kIRP6_gC25<IzMmge9F0?2
+!s85 0
+!s108 1628698699.972000
+!s107 G:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI/datadriver.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+G:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI|G:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI/datadriver.v|
+!s101 -O0
+vMasterDriver
+I[z6cBUOFj2On@6U2=Uz^50
+VYdiZH0iZZK4k8?=05F1Xn2
+R1
+w1628173067
+8G:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI/MasterDriver.v
+FG:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI/MasterDriver.v
+L0 1
+R2
+r1
+31
+R3
+R4
+n@master@driver
+!i10b 1
+!s100 IX1:Sd?oN2K^gGZ<K<k_A0
+!s85 0
+!s108 1628698699.347000
+!s107 G:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI/MasterDriver.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+G:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI|G:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI/MasterDriver.v|
+!s101 -O0
+vSPIDAC
+DXx6 sv_std 3 std 0 22 F[19LRNL:5;XmIFh[XOPn1
+!i10b 1
+!s100 ggn^^klZLG[01n`VcXEgB1
+I77BAQMHLGFY=kVfdn5?C90
+VZF5H52[XNRFU<bWT:_GIN0
+!s105 SPIDAC_sv_unit
+S1
+R1
+w1628172607
+8G:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI/SPIDAC.sv
+FG:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI/SPIDAC.sv
+L0 6
+R2
+r1
+!s85 0
+31
+!s108 1628698700.883000
+!s107 G:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI/SPIDAC.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+G:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI|G:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI/SPIDAC.sv|
+!s101 -O0
+o-sv -work work -O0
+!s92 -sv -work work {+incdir+G:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI} -O0
+n@s@p@i@d@a@c
+vSPIMaster
+IBWjmNkehR`FiTfSYO>`c@3
+VbE>mlNHD=BdPjE^ISjYT[1
+R1
+Z5 w1628172228
+Z6 8G:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI/SPIMaster.v
+Z7 FG:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI/SPIMaster.v
+L0 3
+R2
+r1
+31
+Z8 !s108 1628698698.928000
+Z9 !s107 G:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI/SPIMaster.v|
+Z10 !s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+G:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI|G:/My Drive/FPGA Design/SPI Interface/SPI Verilog Projects/SPI for LTC2668 and LTC2494/SPI/SPIMaster.v|
+R3
+R4
+n@s@p@i@master
+!i10b 1
+!s100 24z?k9C0_gD5YPFkR<kOF2
+!s85 0
+!s101 -O0
+vSPIMasterCS
+I`bh8`_T>KQ7^?k[M<=Q9Z0
+VIXFS?6nXkMd<:OR7W3?>V2
+R1
+R5
+R6
+R7
+L0 181
+R2
+r1
+31
+R8
+R9
+R10
+R3
+R4
+n@s@p@i@master@c@s
+!i10b 1
+!s100 ;61neB7E2^dCZY9[3Ik;i0
+!s85 0
+!s101 -O0

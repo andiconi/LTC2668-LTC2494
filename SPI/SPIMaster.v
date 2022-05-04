@@ -1,0 +1,329 @@
+//This module contains all logic to process SPI data.
+//works in ALL 4 modes of SPI.
+module SPIMaster
+	#(parameter SPI_MODE = 0,
+	  parameter HALF_BIT_CLKS = 2, //half of clock division factor
+	  parameter BYTE_EDGES = 16)
+	(
+	input i_FPGA_rst, //system reset
+	input i_FPGA_clk, //system clock
+	
+	input[7:0] i_MOSI, //mosi byte
+	input i_MOSIdv, //mosi data valid
+	output reg o_MOSI_ready, //ready to recive byte from higher level
+	
+	output reg[7:0] o_MISO, //miso byte
+	output reg o_MISOdv, //MISO data valid
+	
+	output reg o_SPI_clk, //SPI clock
+	input i_SPI_MISO,
+	output reg o_SPI_MOSI
+	);
+	
+	wire w_CPOL; //clock polarity
+	wire w_CPHA; //clock phase
+	
+	reg [$clog2(HALF_BIT_CLKS*2)-1:0] r_SPIclkCount;
+	reg r_SPIclk; 
+	reg[4:0] r_SPIclkEdges; //check for end of transmission
+	reg r_LeadingEdge; //high if edge of SPI CLK is leading edge. used to decode in different SPI modes
+	reg r_TrailingEdge; //high if edge of SPI CLK is Trailing edge. used to decode in different SPI modes
+	reg r_MOSIdv;
+	reg[7:0] r_MOSI;
+	
+	reg[2:0] r_MOSIbitCount;
+	reg[2:0] r_MISObitCount;
+	
+	//SPI modes
+	assign w_CPHA = (SPI_MODE == 1) | (SPI_MODE == 3);
+	assign w_CPOL = (SPI_MODE == 2) | (SPI_MODE == 3);
+	
+	
+	//SPI Clock Generation
+	//Generates SPI clock at 1/4 of i_FPGA_clk
+	always @ (posedge i_FPGA_clk or negedge i_FPGA_rst)
+	begin 
+		if (~i_FPGA_rst)begin
+			o_MOSI_ready <= 1'b0;
+			r_SPIclkEdges <= 0;
+			r_LeadingEdge <= 1'b0;
+			r_TrailingEdge <= 1'b0;
+			r_SPIclk <= w_CPOL;
+			r_SPIclkCount <= 0;
+		end
+		else
+		begin
+			r_LeadingEdge <= 1'b0;
+			r_TrailingEdge <= 1'b0;
+			
+			if(i_MOSIdv) begin
+				o_MOSI_ready <= 1'b0;
+				r_SPIclkEdges <= BYTE_EDGES;
+			end
+			else if (r_SPIclkEdges > 0) begin
+				o_MOSI_ready <= 1'b0;
+				
+				if(r_SPIclkCount == HALF_BIT_CLKS*2-1) begin
+					r_SPIclkEdges <= r_SPIclkEdges - 1;
+					r_TrailingEdge <= 1'b1;
+					r_SPIclkCount <= 0;
+					r_SPIclk <= ~r_SPIclk;
+				end
+				else if (r_SPIclkCount == HALF_BIT_CLKS - 1) begin
+					r_SPIclkEdges <= r_SPIclkEdges - 1; 
+					r_LeadingEdge <= 1'b1;
+					r_SPIclkCount <= r_SPIclkCount + 1;
+					r_SPIclk <= ~r_SPIclk;
+				end
+				else
+				begin
+					r_SPIclkCount <= r_SPIclkCount + 1;
+				end
+			end
+			
+			else 
+			begin
+				o_MOSI_ready <= 1'b1;
+			end
+			
+		end
+	end
+
+
+	//MOSI Data Generation
+	//Load data into TX register. 
+	always @(posedge i_FPGA_clk or negedge i_FPGA_rst)
+	begin
+		if(~i_FPGA_rst) begin
+			r_MOSI <= 8'h00;
+			r_MOSIdv <= 1'b0;
+		end
+		else
+		begin
+			r_MOSIdv <= i_MOSIdv;
+			if (i_MOSIdv) begin
+			r_MOSI <= i_MOSI;
+			end
+		end
+	end
+
+	//Send Data
+	//Preloads first bit if ~CPHA then sends remaining bits MSB to LSB on correct clock edge (Trailing and leading edge variables)
+	always @(posedge i_FPGA_clk or negedge i_FPGA_rst)
+	begin
+		if(~i_FPGA_rst) begin
+			o_SPI_MOSI <= 1'b0;
+			r_MOSIbitCount <= 3'b111;
+		end
+		else
+		begin
+			if(o_MOSI_ready) begin
+				r_MOSIbitCount <= 3'b111;
+			end
+			else if (r_MOSIdv & ~w_CPHA) begin
+				o_SPI_MOSI <= r_MOSI[3'b111];
+				r_MOSIbitCount <= 3'b110;
+			end
+			else if((r_LeadingEdge & w_CPHA) | (r_TrailingEdge & ~w_CPHA))begin //send one bit starting at MSB go to last bit
+				r_MOSIbitCount <= r_MOSIbitCount - 1;
+				o_SPI_MOSI <= r_MOSI[r_MOSIbitCount];
+			end
+		end	
+	end
+	
+	
+	
+	//Read MISO DATA on correct edge
+	always @(posedge i_FPGA_clk or negedge i_FPGA_rst)
+	begin
+		if (~i_FPGA_rst) begin
+			o_MISO <= 8'h00;
+			o_MISOdv <= 1'b0;
+			r_MISObitCount <= 3'b111;
+		end
+   else
+   begin
+		o_MISOdv <= 1'b0;
+
+      if (o_MOSI_ready) begin
+			r_MISObitCount <= 3'b111;
+      end
+      else if ((r_LeadingEdge & ~w_CPHA) | (r_TrailingEdge & w_CPHA)) begin //read data MSB to LSB
+			o_MISO[r_MISObitCount] <= i_SPI_MISO;
+			r_MISObitCount <= r_MISObitCount - 1;
+			if (r_MISObitCount == 3'b000)
+			begin
+				o_MISOdv <= 1'b1;
+			end
+		end
+	end
+	end
+	
+	//Clock Delay
+	always @(posedge i_FPGA_clk or negedge i_FPGA_rst)
+	begin
+		if (~i_FPGA_rst)begin
+			o_SPI_clk <= w_CPOL;
+		end
+		else
+			begin
+				o_SPI_clk <= r_SPIclk;
+			end
+		end
+		
+endmodule
+
+
+
+//Chip Select State Machine
+//All this does is count bytes and controls Chip select.
+
+module SPIMasterCS
+	#(parameter SPI_MODE = 0,
+	parameter HALF_BIT_CLKS = 2,
+	parameter BYTES_PER_CS = 16, //MAX bytes to be sent. Was uesd to control width of counting bits. ADC and DAC need 3 bytes
+	parameter CS_INACTIVE_CLKS = 0)
+	(
+
+	//Control signals
+	input i_FPGA_rst,
+	input i_FPGA_clk,
+	
+	//MOSI
+	input[4:0] i_MOSI_count, //counter for how many bytes transferred    change for more bytes cant sythesize log 2
+	input[7:0] i_MOSI, //transmit byte
+	input i_MOSIdv, //data valid
+	output o_MOSI_ready, //ready
+	
+	//MISO
+	output reg[4:0] o_MISO_count, //recived bytes counter change for more bytes cant sythesize log 2
+	output o_MISOdv,
+	output[7:0] o_MISO,
+	
+	//interface
+	output o_SPI_clk,
+	input i_SPI_MISO,
+	output o_SPI_MOSI,
+	output o_SPI_CS
+	);
+	
+	localparam IDLE = 2'b00;
+	localparam TRANSFER = 2'b01;
+	localparam CSINACTIVE = 2'b10;
+	
+	reg [1:0] r_SM_CS; // state machine case
+	reg r_CS_n;
+	reg [$clog2(CS_INACTIVE_CLKS)-1:0] r_CS_Inactive_Count;
+	reg [$clog2(BYTES_PER_CS+1)-1:0] r_MOSI_Count;
+	wire w_Master_Ready;
+	
+	
+	
+	
+	
+	
+	
+	
+	//instantiate master
+	SPIMaster
+		#(.SPI_MODE(SPI_MODE),
+		.HALF_BIT_CLKS(HALF_BIT_CLKS)
+		) SPIMaster_inst
+		(
+		.i_FPGA_rst(i_FPGA_rst),
+		.i_FPGA_clk(i_FPGA_clk),
+		
+		.i_MOSI(i_MOSI), // MOSI BYTE
+		.i_MOSIdv(i_MOSIdv), // Data Valid  
+		.o_MOSI_ready(w_Master_Ready), // Ready
+   
+		
+		.o_MISOdv(o_MISOdv), // Data Valid 
+		.o_MISO(o_MISO),   
+
+		.o_SPI_clk(o_SPI_clk), //SPI Clock
+		.i_SPI_MISO(i_SPI_MISO), 
+		.o_SPI_MOSI(o_SPI_MOSI)
+		);
+
+		always @(posedge i_FPGA_clk or negedge i_FPGA_rst) 
+		begin 
+			if(~i_FPGA_rst) 
+			begin
+				r_SM_CS <= IDLE;
+				r_CS_n <= 1'b1;
+				r_MOSI_Count <= 0;
+				r_CS_Inactive_Count <= CS_INACTIVE_CLKS;
+			end
+			else
+			begin
+				case(r_SM_CS)
+				IDLE:
+				begin
+					//CHECK FOR START OF TRANSMISSION THEN SET UP FOR TRANSMISSION
+					if(r_CS_n & i_MOSIdv)
+					begin
+						r_MOSI_Count <= i_MOSI_count - 1;
+						r_CS_n <= 1'b0;
+						r_SM_CS <= TRANSFER;
+					end
+				end
+				TRANSFER:
+				//counting bytes till i_MOSI_count is reached
+				begin
+					if(w_Master_Ready)
+					begin
+						if (r_MOSI_Count > 0)  
+						begin
+							if (i_MOSIdv)
+							begin
+								r_MOSI_Count <= r_MOSI_Count - 1;
+							end
+						end
+						else
+						begin // done transferring 
+							r_CS_n <= 1'b1;
+							r_CS_Inactive_Count <= CS_INACTIVE_CLKS;
+							r_SM_CS <= CSINACTIVE;
+						end
+					end
+				end
+				//
+				CSINACTIVE:
+				begin
+					if(r_CS_Inactive_Count > 0)
+					begin
+						r_CS_Inactive_Count <= r_CS_Inactive_Count - 1'b1;
+					end
+					else
+					begin
+						r_SM_CS <= IDLE;
+					end
+				end
+				
+				default:
+				begin
+					r_CS_n <= 1'b1;
+					r_SM_CS <= IDLE;
+				end
+				endcase
+			end
+		end
+		
+		always @(posedge i_FPGA_clk)
+		begin
+			if(r_CS_n)
+			begin
+				o_MISO_count <= 0;
+			end
+			else if(o_MISOdv)
+			begin
+				o_MISO_count <= o_MISO_count + 1'b1;
+			end
+		end
+		
+		assign o_SPI_CS = r_CS_n;
+		
+		assign o_MOSI_ready = ((r_SM_CS == IDLE) | (r_SM_CS == TRANSFER && w_Master_Ready == 1'b1 && r_MOSI_Count > 0)) & ~i_MOSIdv;
+endmodule
+	

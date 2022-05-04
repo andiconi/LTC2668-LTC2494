@@ -1,0 +1,32 @@
+Quartus II Archive log --	C:/Program Files (x86)/Summer Research/PROJECTS/SPI/SPI_tmp_archive.qarlog
+
+Archive:	C:/Program Files (x86)/Summer Research/PROJECTS/SPI/SPI_tmp_archive.qar
+Date:		Mon Aug 02 10:28:43 2021
+Quartus II 64-Bit		13.0.1 Build 232 06/12/2013 SP 1 SJ Web Edition
+
+	=========== Files Selected: ===========
+C:/Program Files (x86)/Summer Research/PROJECTS/SPI/BlockWDriver.bdf
+C:/Program Files (x86)/Summer Research/PROJECTS/SPI/CLOCK.bsf
+C:/Program Files (x86)/Summer Research/PROJECTS/SPI/CLOCK.ppf
+C:/Program Files (x86)/Summer Research/PROJECTS/SPI/CLOCK.qip
+C:/Program Files (x86)/Summer Research/PROJECTS/SPI/CLOCK.v
+C:/Program Files (x86)/Summer Research/PROJECTS/SPI/CLOCK_bb.v
+C:/Program Files (x86)/Summer Research/PROJECTS/SPI/MasterDriver.v
+C:/Program Files (x86)/Summer Research/PROJECTS/SPI/SPI.qpf
+C:/Program Files (x86)/Summer Research/PROJECTS/SPI/SPIDAC.qsf
+C:/Program Files (x86)/Summer Research/PROJECTS/SPI/SPIDAC.sdc
+C:/Program Files (x86)/Summer Research/PROJECTS/SPI/SPIDAC.sv
+C:/Program Files (x86)/Summer Research/PROJECTS/SPI/SPIMaster.v
+C:/Program Files (x86)/Summer Research/PROJECTS/SPI/assignment_defaults.qdf
+C:/Program Files (x86)/Summer Research/PROJECTS/SPI/datadriver.v
+C:/Program Files (x86)/Summer Research/PROJECTS/SPI/incremental_db/compiled_partitions/SPIDAC.db_info
+	======= Total: 15 files to archive =======
+
+	================ Status: ===============
+All files archived successfully.
+
+
+******* Archived project restoration attempt on Mon Aug 02 10:28:45 2021
+Source archive file:	C:/Program Files (x86)/Summer Research/PROJECTS/SPI/SPI_tmp_archive.qar
+Archive was extracted into	C:/Program Files (x86)/Summer Research/PROJECTS/SPIfinal/
+		 - successfully.
