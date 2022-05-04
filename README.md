@@ -2,11 +2,10 @@
 
 
 # SPI Interface for LTC2668 and LTC2494 
+### Introduction
+This Document explains how the SPIMaster module and other modules contained in the SPI Quartus project communicate with each other. This document also provides an overview on each module's ports. These modules may be modified to fit the needs of the current project.
+
 # Table of Contents
-
-- [Introduction](#Introduction)
-
-
 - [Module Definitions](#Module-Definitions)
 
 
