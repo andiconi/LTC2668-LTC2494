@@ -30,14 +30,6 @@ This Document explains how the SPIMaster module and other modules contained in t
   - Inputs
   - Outputs
  
-
-
-## Introduction
-This Document explains how the SPIMaster module and other modules
-contained in the SPI Quartus project communicate with each other. This
-document also provides an overview on each module's ports. These modules
-may be modified to fit the needs of the current project.
-
 ## Module Definitions
 **SPIMaster** contains the logic required to take a 1-byte input, and
 serialize it to send over the MOSI line, as well as the logic to read
