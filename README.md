@@ -51,7 +51,7 @@ SPIMaster module.
 **SPIDAC** is a System Verilog testbench. All the modules are
 instantiated in this file and a barebones test is implemented. A more
 robust example testbench should be available in the Master and Slave
-file.
+file (Not Available on GitHub).
 
 
 ## Port Definitions
@@ -128,6 +128,7 @@ file.
 ## Clock_Divider
 
 ![](vertopal_8e8b5408bde241a783e899392b2107a9/media/image8.png)
+
 *Figure 5 Clock_Divider Diagram*
 
 ### Inputs
